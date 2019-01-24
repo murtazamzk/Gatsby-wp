@@ -1,88 +1,44 @@
-const config = require('./data/SiteConfig')
-
-const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
-
 module.exports = {
-  pathPrefix: config.pathPrefix,
   siteMetadata: {
-    siteUrl: config.siteUrl + pathPrefix,
-    rssMetadata: {
-      site_url: config.siteUrl + pathPrefix,
-      feed_url: config.siteUrl + pathPrefix + config.siteRss,
-      title: config.siteTitle,
-      description: config.siteDescription,
-      image_url: `${config.siteUrl + pathPrefix}/logos/logo-512.png`,
-      author: config.userName,
-      copyright: config.copyright
-    }
+    title: `Gatsby Default Starter`,
+    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
+    author: `@gatsbyjs`,
   },
   plugins: [
-    'gatsby-plugin-styled-components',
-    'gatsby-plugin-react-helmet',
+    `gatsby-plugin-react-helmet`,
     {
-      resolve: 'gatsby-source-wordpress',
+      resolve: `gatsby-source-filesystem`,
       options: {
-        // The base url to your WP site.
-        baseUrl: 'gatsbynetliflydemo.justinwhall.com',
-        // baseUrl: 'wpgatsby.wtf',
-        // WP.com sites set to true, WP.org set to false
-        hostingWPCOM: false,
-        // The protocol. This can be http or https.
-        protocol: 'https',
-        // Use 'Advanced Custom Fields' Wordpress plugin
-        useACF: false,
-        auth: {},
-        // Set to true to debug endpoints on 'gatsby build'
-        verboseOutput: true,
-        excludedRoutes: [
-          "/*/*/comments",
-          "/yoast/**",
-          "/*/*/users",
-          "/*/users/me",
-          "/oembed/*"
-        ],
-      }
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
     },
-    // {
-    //   resolve: 'gatsby-plugin-google-analytics',
-    //   options: {
-    //     trackingId: config.googleAnalyticsID,
-    //   },
-    // },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     {
-      resolve: 'gatsby-plugin-nprogress',
+      resolve: `gatsby-plugin-manifest`,
       options: {
-        color: config.themeColor
-      }
+        name: `gatsby-starter-default`,
+        short_name: `starter`,
+        start_url: `/`,
+        background_color: `#663399`,
+        theme_color: `#663399`,
+        display: `minimal-ui`,
+        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
     },
-    'gatsby-plugin-sharp',
-    'gatsby-plugin-catch-links',
-    'gatsby-plugin-twitter',
-    'gatsby-plugin-sitemap',
     {
-      resolve: 'gatsby-plugin-manifest',
+      resolve: "gatsby-source-wordpress",
       options: {
-        name: config.siteTitle,
-        short_name: config.siteTitle,
-        description: config.siteDescription,
-        start_url: config.pathPrefix,
-        background_color: config.backgroundColor,
-        theme_color: config.themeColor,
-        display: 'minimal-ui',
-        icons: [
-          {
-            src: '/logos/logo-192x192.png',
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: '/logos/logo-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
+          baseUrl: "murtaza.me/wpgatsby",
+          protocol: "http",
+          hostingWPCOM: false,
+          useACF: true,
+          verboseOutput: true
       }
-    },
-    'gatsby-plugin-offline'
-  ]
+    }
+    // this (optional) plugin enables Progressive Web App + Offline functionality
+    // To learn more, visit: https://gatsby.app/offline
+    // 'gatsby-plugin-offline',
+  ],
 }
